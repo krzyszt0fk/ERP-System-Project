@@ -2,6 +2,8 @@ package com.example.SystemBackend.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,6 +14,6 @@ public class Warehouse {
     private Long idWarehouse;
     @Column
     private String name;
-@ManyToMany(mappedBy = "warehouses")
-    private Set<Item> items;
+@OneToMany(fetch = FetchType.LAZY,mappedBy = "warehouse")
+    private List<Item> items;
 }

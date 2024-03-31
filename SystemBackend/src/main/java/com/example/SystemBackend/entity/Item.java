@@ -1,5 +1,6 @@
 package com.example.SystemBackend.entity;
 
+import com.example.SystemBackend.dto.ItemSaveDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,8 +20,14 @@ public class Item {
     @ManyToOne(fetch = FetchType.EAGER) //chcemy za kazdym razem pobierac jaki to rodzaj
     @JoinColumn(name="idQuantityType")
     private QuantityType quantityType;
-@ManyToMany
-@JoinTable(name = "item_warehouse" , joinColumns =@JoinColumn(name = "idItem"), inverseJoinColumns = @JoinColumn(name = "idWarehouse"))
-    private Set<Warehouse> warehouses;
+@ManyToOne(fetch = FetchType.EAGER)
+@JoinColumn(name="idWarehouse")
+    private Warehouse warehouse;
 
+    public static Item of(ItemSaveDto dto) {
+        Item item = new Item();
+        item.setName(dto.getName());
+        item.setQuantity(dto.getQuantity());
+        return item;
+    }
 }
